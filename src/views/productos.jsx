@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import TablaProductos from '../components/producto/TablaProductos'; // Asumiendo que tienes este componente
-import ModalRegistroProducto from '../components/producto/ModalRegistroProductos'; // Asumiendo que tienes este componente
-import { Container, Button } from "react-bootstrap";
+import TablaProductos from '../components/producto/TablaProductos';
+import ModalRegistroProducto from '../components/producto/ModalRegistroProductos';
+import { Container, Button, Row, Col } from "react-bootstrap";
+import CuadroBusquedas from '../components/busquedas/CuadroBusquedas';
 
 const productos = () => {
   const [listaProductos, setListaProductos] = useState([]);
@@ -17,6 +18,10 @@ const productos = () => {
     stock: '',
     imagen: ''
   });
+  const [productosFiltrados, setProductosFiltrados] = useState([]);
+  const [textoBusqueda, setTextoBusqueda] = useState("");
+  const [paginaActual, establecerPaginaActual] = useState(1);
+  const elementosPorPagina = 5; // Número de elementos por página
 
   // Obtener productos
   const obtenerProductos = async () => {
@@ -25,6 +30,7 @@ const productos = () => {
       if (!respuesta.ok) throw new Error('Error al cargar los productos');
       const datos = await respuesta.json();
       setListaProductos(datos);
+      setProductosFiltrados(datos); // Inicializa los filtrados con todos los productos
       setCargando(false);
     } catch (error) {
       setErrorCarga(error.message);
@@ -91,19 +97,49 @@ const productos = () => {
     }
   };
 
+  const manejarCambioBusqueda = (e) => {
+    const texto = e.target.value.toLowerCase();
+    setTextoBusqueda(texto);
+  
+    const filtrados = listaProductos.filter((producto) =>
+      (producto.nombre_producto + ' ' + (producto.descripcion_producto || '')).toLowerCase().includes(texto)
+    );
+    setProductosFiltrados(filtrados);
+    establecerPaginaActual(1); // Resetear a la primera página al buscar
+  };
+
+  // Calcular productos paginados
+  const productosPaginados = productosFiltrados.slice(
+    (paginaActual - 1) * elementosPorPagina,
+    paginaActual * elementosPorPagina
+  );
+
   return (
     <Container className="mt-5">
-      <br />
+      
       <h4>Productos</h4>
-      <Button variant="primary" onClick={() => setMostrarModal(true)}>
-        Nuevo Producto
-      </Button>
-      <br/><br/>
+      <Row>
+        <Col lg={2} md={4} sm={4} xs={5}>
+          <Button variant="primary" onClick={() => setMostrarModal(true)} style={{ width: "100%" }}>
+            Nuevo Producto
+          </Button>
+        </Col>
+        <Col lg={5} md={6} sm={8} xs={7}>
+          <CuadroBusquedas
+            textoBusqueda={textoBusqueda}
+            manejarCambioBusqueda={manejarCambioBusqueda}
+          />
+        </Col>
+      </Row>
 
       <TablaProductos 
-        productos={listaProductos} 
-        cargando={cargando} 
-        error={errorCarga} 
+        productos={productosPaginados}
+        cargando={cargando}
+        error={errorCarga}
+        totalElementos={productosFiltrados.length}
+        elementosPorPagina={elementosPorPagina}
+        paginaActual={paginaActual}
+        establecerPaginaActual={establecerPaginaActual}
       />
 
       <ModalRegistroProducto
@@ -115,7 +151,7 @@ const productos = () => {
         errorCarga={errorCarga}
         categorias={listaCategorias}
       />
-      
+
     </Container>
   );
 };

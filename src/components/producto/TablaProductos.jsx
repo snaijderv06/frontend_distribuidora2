@@ -1,8 +1,17 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import Paginacion from '../ordenamiento/Paginacion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const TablaProductos = ({ productos, cargando, error }) => {
+const TablaProductos = ({ 
+  productos, 
+  cargando, 
+  error,
+totalElementos,
+elementosPorPagina,
+paginaActual,
+establecerPaginaActual 
+}) => {
 
   if (cargando) {
     return <div>Cargando productos...</div>; // Muestra mensaje mientras carga
@@ -13,6 +22,7 @@ const TablaProductos = ({ productos, cargando, error }) => {
 
   // Renderizado de la tabla con los datos recibidos
   return (
+    <>
     <Table striped bordered hover responsive>
       <thead>
         <tr>
@@ -47,6 +57,13 @@ const TablaProductos = ({ productos, cargando, error }) => {
         ))}
       </tbody>
     </Table>
+    <Paginacion
+        elementosPorPagina={elementosPorPagina}
+        totalElementos={totalElementos}
+        paginaActual={paginaActual}
+        establecerPaginaActual={establecerPaginaActual}
+      />
+    </>
   );
 };
 
