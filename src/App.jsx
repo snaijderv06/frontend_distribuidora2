@@ -10,6 +10,7 @@ import Categorias from "./views/Categorias";
 import Ventas from "./views/ventas";
 import Compras from "./views/Compras";
 import Catalogo from "./views/CatalogoProductos";
+import Estadisticas from "./views/Estadisticas";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/ventas" element={<Ventas />} />
         <Route path="/Compras" element={<Compras />} />
         <Route path="/catalogo" element={<Catalogo/>} />
+        <Route path="/estadisticas" element={<Estadisticas/>} />
 
         </Routes>
       </main>
