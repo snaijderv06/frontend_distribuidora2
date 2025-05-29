@@ -1,7 +1,9 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import Paginacion from '../ordenamiento/Paginacion';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Productos from '../../views/productos';
+
 
 const TablaProductos = ({ 
   productos, 
@@ -10,7 +12,11 @@ const TablaProductos = ({
 totalElementos,
 elementosPorPagina,
 paginaActual,
-establecerPaginaActual 
+establecerPaginaActual,
+abrirModalEliminacion,
+abrirModalEdicion,
+generarPDFDetalleProducto
+
 }) => {
 
   if (cargando) {
@@ -55,6 +61,36 @@ establecerPaginaActual
               'Sin imagen'
             )}
           </td>
+          
+          <td>
+
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                className="me-2"
+                onClick={() => generarPDFDetalleProducto(producto)}
+              >
+                <i className="bi bi-filetype-pdf"></i>
+              </Button>
+
+
+            <Button
+                  variant="outline-warning"
+                  size="sm"
+                  className="me-2"
+                  onClick={() => abrirModalEdicion(producto)}
+                >
+                  <i className="bi bi-pencil"></i>
+          </Button>
+
+          <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => abrirModalEliminacion(producto)}
+                >
+                  <i className="bi bi-trash"></i>
+          </Button>
+            </td>
           </tr>
         ))}
       </tbody>

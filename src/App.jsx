@@ -11,6 +11,8 @@ import Ventas from "./views/ventas";
 import Compras from "./views/Compras";
 import Catalogo from "./views/CatalogoProductos";
 import Estadisticas from "./views/Estadisticas";
+import Dashboard from "./views/Dashboard";
+import Empleados from "./views/Empleados";
 
 const App = () => {
   return (
@@ -30,6 +32,9 @@ const App = () => {
         <Route path="/Compras" element={<Compras />} />
         <Route path="/catalogo" element={<Catalogo/>} />
         <Route path="/estadisticas" element={<Estadisticas/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/Empleados" element={<Empleados/>} />
+
 
         </Routes>
       </main>

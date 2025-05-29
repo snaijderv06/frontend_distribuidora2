@@ -5,7 +5,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import ModalRegistroEmpleados from '../components/empleados/ModalRegistroEmpleados';
 import CuadroBusquedas from '../components/busquedas/Cuadrobusquedas';
 import ModalEliminacionEmpleados from '../components/empleados/ModalEliminacionEmpleados';
-import ModalEdicionEmpleados from '../components/empleados/ModalEdicioEmpleados';
+import ModalEdicionEmpleados from '../components/empleados/ModalEdicionEmpleados';
 
 // Declaración del componente Categorias
 const Empleados = () => {
