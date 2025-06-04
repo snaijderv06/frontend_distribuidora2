@@ -1,4 +1,4 @@
-// ModalRegistroCategoria.jsx
+// components/empleados/ModalRegistroEmpleados.jsx
 import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
@@ -17,8 +17,8 @@ const ModalRegistroEmpleados = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3" controlId="formprimernombreEmpleado">
-            <Form.Label>primer_nombre</Form.Label>
+          <Form.Group className="mb-3" controlId="formPrimerNombreEmpleado">
+            <Form.Label>Primer Nombre</Form.Label>
             <Form.Control
               type="text"
               name="primer_nombre"
@@ -29,81 +29,72 @@ const ModalRegistroEmpleados = ({
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formsegundonombreEmpleado">
-            <Form.Label>segundo_nombre</Form.Label>
+          <Form.Group className="mb-3" controlId="formSegundoNombreEmpleado">
+            <Form.Label>Segundo Nombre</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="segundo_nombre"
               value={nuevoEmpleado.segundo_nombre}
               onChange={manejarCambioInput}
-              placeholder="Ingresa la segundo nombre (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el segundo nombre (máx. 20 caracteres)"
+              maxLength={20}
             />
-
-            </Form.Group>
-          <Form.Group className="mb-3" controlId="formprimerapellidoEmpleado">
-            <Form.Label>primer_apellido</Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formPrimerApellidoEmpleado">
+            <Form.Label>Primer Apellido</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="primer_apellido"
               value={nuevoEmpleado.primer_apellido}
               onChange={manejarCambioInput}
-              placeholder="Ingresa el primer apellido (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el primer apellido (máx. 20 caracteres)"
+              maxLength={20}
+              required
             />
-
-            </Form.Group>
-          <Form.Group className="mb-3" controlId="formsegundoapellidoEmpleado">
-            <Form.Label>segundo_apellido</Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formSegundoApellidoEmpleado">
+            <Form.Label>Segundo Apellido</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="segundo_apellido"
               value={nuevoEmpleado.segundo_apellido}
               onChange={manejarCambioInput}
-              placeholder="Ingresa el segundo apellido (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el segundo apellido (máx. 20 caracteres)"
+              maxLength={20}
             />
-
-</Form.Group>
-          <Form.Group className="mb-3" controlId="formcelularEmpleado">
-            <Form.Label>celular</Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formCelularEmpleado">
+            <Form.Label>Celular</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="celular"
               value={nuevoEmpleado.celular}
               onChange={manejarCambioInput}
-              placeholder="Ingresa el celular (máx. 50 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el celular (máx. 12 caracteres)"
+              maxLength={12}
             />
-
-</Form.Group>
-          <Form.Group className="mb-3" controlId="formcargoEmpleado">
-            <Form.Label>cargo</Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formCargoEmpleado">
+            <Form.Label>Cargo</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="cargo"
               value={nuevoEmpleado.cargo}
               onChange={manejarCambioInput}
-              placeholder="Ingresa el primer direccion (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el cargo (máx. 20 caracteres)"
+              maxLength={20}
+              required
             />
-
-</Form.Group>
-          <Form.Group className="mb-3" controlId="formfechaContratacion">
-            <Form.Label>fecha_contratacion</Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formFechaContratacion">
+            <Form.Label>Fecha de Contratación</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="date"
               name="fecha_contratacion"
               value={nuevoEmpleado.fecha_contratacion}
               onChange={manejarCambioInput}
-              placeholder="Ingresa el primer cedula (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Selecciona la fecha de contratación"
+              required
             />
           </Form.Group>
           {errorCarga && (
@@ -112,9 +103,7 @@ const ModalRegistroEmpleados = ({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => {
-          setMostrarModal(false);
-        }}>
+        <Button variant="secondary" onClick={() => setMostrarModal(false)}>
           Cancelar
         </Button>
         <Button variant="primary" onClick={agregarEmpleado}>

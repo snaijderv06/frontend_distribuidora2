@@ -104,14 +104,7 @@ const Encabezado = () => {
                 {estaColapsado ? <i className="bi-box2-heart-fill me-2"></i> : null}
                 <strong>Gestión Clientes</strong>
               </NavDropdown.Item>
-
-              <NavDropdown.Item
-                className="text-black"
-                onClick={() => navegarA("/Usuarios")}
-              >
-                {estaColapsado ? <i className="bi-bookmarks-fill me-2"></i> : null}
-                <strong>Gestión Usuarios</strong>
-              </NavDropdown.Item>
+              
 
               <NavDropdown.Item
                 onClick={() => navegarA("/Empleados")}

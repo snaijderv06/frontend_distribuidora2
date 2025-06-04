@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import VentasPorMes from '../components/Graficos/VentasPorMes';
 import VentasPorEmpleado from '../components/Graficos/VentasPorEmpleado';
-import ChatIA from '../components/Chat/chatIa';
+import ChatIA from '../components/Chat/ChatIA';
 
 const Estadisticas = () => {
   const [meses, setMeses] = useState([]);

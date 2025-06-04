@@ -1,3 +1,4 @@
+// components/empleados/ModalEdicionEmpleados.jsx
 import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
@@ -16,96 +17,86 @@ const ModalEdicionEmpleados = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3" controlId="formNombreEmpleado">
-            <Form.Label>Nombre del Empleado</Form.Label>
+          <Form.Group className="mb-3" controlId="formPrimerNombreEmpleado">
+            <Form.Label>Primer Nombre</Form.Label>
             <Form.Control
               type="text"
               name="primer_nombre"
               value={EmpleadoEditado?.primer_nombre || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa el nombre (máx. 20 caracteres)"
+              placeholder="Ingresa el primer nombre (máx. 20 caracteres)"
               maxLength={20}
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formNombre2Empleado">
+          <Form.Group className="mb-3" controlId="formSegundoNombreEmpleado">
             <Form.Label>Segundo Nombre</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="segundo_nombre"
               value={EmpleadoEditado?.segundo_nombre || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa la descripción (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el segundo nombre (máx. 20 caracteres)"
+              maxLength={20}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formApellidoEmpleado">
+          <Form.Group className="mb-3" controlId="formPrimerApellidoEmpleado">
             <Form.Label>Primer Apellido</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="primer_apellido"
               value={EmpleadoEditado?.primer_apellido || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa la descripción (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el primer apellido (máx. 20 caracteres)"
+              maxLength={20}
+              required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formApellido2Empleado">
+          <Form.Group className="mb-3" controlId="formSegundoApellidoEmpleado">
             <Form.Label>Segundo Apellido</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="segundo_apellido"
               value={EmpleadoEditado?.segundo_apellido || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa la descripción (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el segundo apellido (máx. 20 caracteres)"
+              maxLength={20}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formCelularEmpleado">
             <Form.Label>Celular</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="celular"
               value={EmpleadoEditado?.celular || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa la descripción (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el celular (máx. 12 caracteres)"
+              maxLength={12}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formCargoEmpleado">
             <Form.Label>Cargo</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="text"
               name="cargo"
               value={EmpleadoEditado?.cargo || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa la descripción (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingresa el cargo (máx. 20 caracteres)"
+              maxLength={20}
+              required
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formFechacontratacionEmpleado">
-            <Form.Label>Fecha Contratación</Form.Label>
+          <Form.Group className="mb-3" controlId="formFechaContratacionEmpleado">
+            <Form.Label>Fecha de Contratación</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="date"
               name="fecha_contratacion"
               value={EmpleadoEditado?.fecha_contratacion || ""}
               onChange={manejarCambioInputEdicion}
-              placeholder="Ingresa la descripción (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Selecciona la fecha de contratación"
+              required
             />
           </Form.Group>
-
-
-
           {errorCarga && (
             <div className="text-danger mt-2">{errorCarga}</div>
           )}
@@ -124,4 +115,3 @@ const ModalEdicionEmpleados = ({
 };
 
 export default ModalEdicionEmpleados;
-

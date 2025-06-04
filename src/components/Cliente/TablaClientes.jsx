@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Paginacion from '../ordenamiento/Paginacion';
 
-// Declaración del componente TablaClientes que recibe props
+
 const TablaClientes = ({ 
   clientes,
   cargando,
@@ -15,15 +15,15 @@ const TablaClientes = ({
   abrirModalEliminacion,
   abrirModalEdicion 
 }) => {
-  // Renderizado condicional según el estado recibido por props
+ 
   if (cargando) {
-    return <div>Cargando clientes...</div>; // Muestra mensaje mientras carga
+    return <div>Cargando clientes...</div>;
   }
   if (error) {
-    return <div>Error: {error}</div>; // Muestra error si ocurre
+    return <div>Error: {error}</div>;
   }
 
-  // Renderizado de la tabla con los datos recibidos
+  
   return (
     <>
       <Table striped bordered hover responsive>
@@ -83,5 +83,5 @@ const TablaClientes = ({
   );
 };
 
-// Exportación del componente
+
 export default TablaClientes;

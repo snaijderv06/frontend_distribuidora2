@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import TablaCliente from '../components/Cliente/TablaClientes';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import ModalRegistroClientes from '../components/Cliente/ModalRegistroClientes';
 import ModalEdicionClientes from '../components/Cliente/ModalEdicionClientes';
@@ -12,7 +11,7 @@ const Clientes = () => {
   const [listaClientes, setListaClientes] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [errorCarga, setErrorCarga] = useState(null);
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarModalRegistro, setMostrarModalRegistro] = useState(false);
   const [nuevoCliente, setNuevoCliente] = useState({
     primer_nombre: '',
     segundo_nombre: '',
@@ -24,7 +23,7 @@ const Clientes = () => {
   });
   const [clientesFiltrados, setClientesFiltrados] = useState([]);
   const [textoBusqueda, setTextoBusqueda] = useState("");
-  const [paginaActual, establecerPaginaActual] = useState(1);
+  const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 4;
   const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
   const [clienteEditado, setClienteEditado] = useState(null);
@@ -79,8 +78,8 @@ const Clientes = () => {
     }
 
     try {
-      const respuesta = await fetch('http://localhost:3000/api/registrarClientes', {
-        method: 'Post',
+      const respuesta = await fetch('http://localhost:3000/api/agregarclientes', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -88,7 +87,8 @@ const Clientes = () => {
       });
 
       if (!respuesta.ok) {
-        throw new Error('Error al agregar el cliente');
+        const errorData = await respuesta.json();
+        throw new Error(errorData.mensaje || 'Error al agregar el cliente');
       }
 
       await obtenerClientes();
@@ -101,7 +101,7 @@ const Clientes = () => {
         direccion: '',
         cedula: ''
       });
-      setMostrarModal(false);
+      setMostrarModalRegistro(false);
       setErrorCarga(null);
     } catch (error) {
       setErrorCarga(error.message);
@@ -117,7 +117,7 @@ const Clientes = () => {
 
     try {
       const respuesta = await fetch(`http://localhost:3000/api/actualizarcliente/${clienteEditado.id_cliente}`, {
-        method: 'Put',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -133,7 +133,8 @@ const Clientes = () => {
       });
 
       if (!respuesta.ok) {
-        throw new Error('Error al actualizar el cliente');
+        const errorData = await respuesta.json();
+        throw new Error(errorData.mensaje || 'Error al actualizar el cliente');
       }
 
       await obtenerClientes();
@@ -150,17 +151,18 @@ const Clientes = () => {
     if (!clienteAEliminar) return;
 
     try {
-      const respuesta = await fetch(`http://localhost:3000/api/eliminarClientes/${clienteAEliminar.id_cliente}`, {
-        method: 'Delete',
+      const respuesta = await fetch(`http://localhost:3000/api/eliminarcliente/${clienteAEliminar.id_cliente}`, {
+        method: 'DELETE',
       });
 
       if (!respuesta.ok) {
-        throw new Error('Error al eliminar el cliente');
+        const errorData = await respuesta.json();
+        throw new Error(errorData.mensaje || 'Error al eliminar el cliente');
       }
 
       await obtenerClientes();
       setMostrarModalEliminacion(false);
-      establecerPaginaActual(1);
+      setPaginaActual(1);
       setClienteAEliminar(null);
       setErrorCarga(null);
     } catch (error) {
@@ -185,17 +187,17 @@ const Clientes = () => {
   const manejarCambioBusqueda = (e) => {
     const texto = e.target.value.toLowerCase();
     setTextoBusqueda(texto);
-    establecerPaginaActual(1);
+    setPaginaActual(1);
 
     const filtrados = listaClientes.filter(
       (cliente) =>
-        cliente.primer_nombre.toLowerCase().includes(texto) ||
-        (cliente.segundo_nombre && cliente.segundo_nombre.toLowerCase().includes(texto)) ||
-        cliente.primer_apellido.toLowerCase().includes(texto) ||
-        (cliente.segundo_apellido && cliente.segundo_apellido.toLowerCase().includes(texto)) ||
-        (cliente.celular && cliente.celular.toLowerCase().includes(texto)) ||
-        (cliente.direccion && cliente.direccion.toLowerCase().includes(texto)) ||
-        cliente.cedula.toLowerCase().includes(texto)
+        (cliente.primer_nombre?.toLowerCase().includes(texto) || '') ||
+        (cliente.segundo_nombre?.toLowerCase().includes(texto) || '') ||
+        (cliente.primer_apellido?.toLowerCase().includes(texto) || '') ||
+        (cliente.segundo_apellido?.toLowerCase().includes(texto) || '') ||
+        (cliente.celular?.toLowerCase().includes(texto) || '') ||
+        (cliente.direccion?.toLowerCase().includes(texto) || '') ||
+        (cliente.cedula?.toLowerCase().includes(texto) || '')
     );
     setClientesFiltrados(filtrados);
   };
@@ -211,21 +213,12 @@ const Clientes = () => {
       <br />
       <h4>Clientes</h4>
       <Row>
-        <Col lg={2} md={4} sm={4} xs={5}>
+        <Col lg={2} md={4} sm={4} xs={5}> 
           <Button
             variant="primary"
             onClick={() => {
-              setNuevoCliente({
-                primer_nombre: '',
-                segundo_nombre: '',
-                primer_apellido: '',
-                segundo_apellido: '',
-                celular: '',
-                direccion: '',
-                cedula: ''
-              });
-              setMostrarModal(true);
-              setErrorCarga(null);
+              console.log("Botón Nuevo Cliente clicado");
+              setMostrarModalRegistro(true);
             }}
             style={{ width: "100%" }}
           >
@@ -247,24 +240,24 @@ const Clientes = () => {
         totalElementos={listaClientes.length}
         elementosPorPagina={elementosPorPagina}
         paginaActual={paginaActual}
-        establecerPaginaActual={establecerPaginaActual}
+        establecerPaginaActual={setPaginaActual}
         abrirModalEliminacion={abrirModalEliminacion}
         abrirModalEdicion={abrirModalEdicion}
       />
 
       <ModalRegistroClientes
-        mostrarModal={mostrarModal}
-        setMostrarModal={setMostrarModal}
-        ClienteNuevo={nuevoCliente}
+        mostrarModalRegistro={mostrarModalRegistro}
+        setMostrarModalRegistro={setMostrarModalRegistro}
+        nuevoCliente={nuevoCliente}
         manejarCambioInput={manejarCambioInput}
-        registrarCliente={agregarCliente}
+        agregarCliente={agregarCliente}
         errorCarga={errorCarga}
       />
 
       <ModalEdicionClientes
         mostrarModalEdicion={mostrarModalEdicion}
         setMostrarModalEdicion={setMostrarModalEdicion}
-        ClienteEditado={clienteEditado}
+        clienteEditado={clienteEditado}
         manejarCambioInputEdicion={manejarCambioInputEdicion}
         actualizarCliente={actualizarCliente}
         errorCarga={errorCarga}
