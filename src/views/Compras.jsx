@@ -33,6 +33,13 @@ const Compras = () => {
   const [compraAEditar, setCompraAEditar] = useState(null);
   const [detallesEditados, setDetallesEditados] = useState([]);
 
+// Lógica de obtención de datos con useEffect
+  useEffect(() => {
+    obtenerCompras();
+    obtenerEmpleados();
+    obtenerProductos();
+  }, []);
+
   const obtenerCompras = async () => {
     try {
       const respuesta = await fetch('http://localhost:3000/api/obtenercompras');
@@ -43,6 +50,22 @@ const Compras = () => {
     } catch (error) {
       setErrorCarga(error.message);
       setCargando(false);
+    }
+  };
+
+  const obtenerDetalles = async (id_compra) => {
+  setCargandoDetalles(true);
+  setErrorDetalles(null);
+    try {
+      const respuesta = await fetch(`http://localhost:3000/api/obtenerdetallescompra/${id_compra}`);
+      if (!respuesta.ok) throw new Error('Error al cargar los detalles de la compra');
+      const datos = await respuesta.json();
+      setDetallesCompra(datos);
+      setCargandoDetalles(false);
+      setMostrarModal(true);
+    } catch (error) {
+      setErrorDetalles(error.message);
+      setCargandoDetalles(false);
     }
   };
 
@@ -68,27 +91,6 @@ const Compras = () => {
     }
   };
 
-  useEffect(() => {
-    obtenerCompras();
-    obtenerEmpleados();
-    obtenerProductos();
-  }, []);
-
-  const obtenerDetalles = async (id_compra) => {
-    setCargandoDetalles(true);
-    setErrorDetalles(null);
-    try {
-      const respuesta = await fetch(`http://localhost:3000/api/obtenerdetallescompra/${id_compra}`);
-      if (!respuesta.ok) throw new Error('Error al cargar los detalles de la compra');
-      const datos = await respuesta.json();
-      setDetallesCompra(datos);
-      setCargandoDetalles(false);
-      setMostrarModal(true);
-    } catch (error) {
-      setErrorDetalles(error.message);
-      setCargandoDetalles(false);
-    }
-  };
 
   const eliminarCompra = async () => {
     if (!compraAEliminar) return;
