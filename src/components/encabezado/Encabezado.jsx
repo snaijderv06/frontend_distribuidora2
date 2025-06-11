@@ -81,9 +81,9 @@ const Encabezado = () => {
             {estaLogueado ? (
               <>
             
-
               {/* Opción de navegación a Inicio */}
-              <Nav.Link
+              
+            <Nav.Link
                 onClick={() => navegarA("/inicio")}
                 className={estaColapsado ? "text-black" : "text-white"}
               >

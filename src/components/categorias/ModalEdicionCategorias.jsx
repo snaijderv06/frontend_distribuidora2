@@ -1,18 +1,18 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const ModalRegistroCategorias = ({
+const ModalEdicionCategorias = ({
   mostrarModal,
   setMostrarModal,
-  nuevaCategoria,
+  categoria,
   manejarCambioInput,
-  registrarCategoria,
+  guardarCambios,
   errorCarga,
 }) => {
   return (
     <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Nueva Categoría</Modal.Title>
+        <Modal.Title>Editar Categoría</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {errorCarga && <p style={{ color: 'red' }}>{errorCarga}</p>}
@@ -22,7 +22,7 @@ const ModalRegistroCategorias = ({
             <Form.Control
               type="text"
               name="nombre_categoria"
-              value={nuevaCategoria.nombre_categoria || ''}
+              value={categoria.nombre_categoria || ''}
               onChange={manejarCambioInput}
               placeholder="Ingrese el nombre"
               maxLength={20}
@@ -34,7 +34,7 @@ const ModalRegistroCategorias = ({
             <Form.Control
               as="textarea"
               name="descripcion_categoria"
-              value={nuevaCategoria.descripcion_categoria || ''}
+              value={categoria.descripcion_categoria || ''}
               onChange={manejarCambioInput}
               placeholder="Ingrese la descripción"
               maxLength={100}
@@ -48,12 +48,12 @@ const ModalRegistroCategorias = ({
         <Button variant="secondary" onClick={() => setMostrarModal(false)}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={registrarCategoria}>
-          Registrar
+        <Button variant="primary" onClick={guardarCambios}>
+          Guardar Cambios
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default ModalRegistroCategorias;
+export default ModalEdicionCategorias;

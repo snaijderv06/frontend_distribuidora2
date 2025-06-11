@@ -1,57 +1,80 @@
-// Importaciones necesarias para el componente visual
 import React from 'react';
-import { Table } from 'react-bootstrap';
-import Paginacion from '../ordenamiento/Paginacion';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Table, Button, Pagination } from 'react-bootstrap';
 
-// Declaración del componente TablaCategorias que recibe props
-const TablaCategorias = ({ 
-  categorias, 
-  cargando, 
+const TablaCategorias = ({
+  categorias,
+  cargando,
   error,
   totalElementos,
   elementosPorPagina,
   paginaActual,
-  establecerPaginaActual 
+  establecerPaginaActual,
+  onEditar,
+  onEliminar,
 }) => {
-  // Renderizado condicional según el estado recibido por props
-  if (cargando) {
-    return <div>Cargando categorías...</div>; // Muestra mensaje mientras carga
-  }
-  if (error) {
-    return <div>Error: {error}</div>;         // Muestra error si ocurre
+  const totalPaginas = Math.ceil(totalElementos / elementosPorPagina);
+
+  const items = [];
+  for (let numero = 1; numero <= totalPaginas; numero++) {
+    items.push(
+      <Pagination.Item
+        key={numero}
+        active={numero === paginaActual}
+        onClick={() => establecerPaginaActual(numero)}
+      >
+        {numero}
+      </Pagination.Item>
+    );
   }
 
-  // Renderizado de la tabla con los datos recibidos
   return (
     <>
-    <Table striped bordered hover responsive>
-      <thead>
-        <tr>
-          <th>ID Categoría</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {categorias.map((categoria) => (
-          <tr key={categoria.id_categoria}>
-            <td>{categoria.id_categoria}</td>
-            <td>{categoria.nombre_categoria}</td>
-            <td>{categoria.descripcion_categoria}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-    <Paginacion
-  elementosPorPagina={elementosPorPagina}
-  totalElementos={totalElementos}
-  paginaActual={paginaActual}
-  establecerPaginaActual={establecerPaginaActual}
-/>
+      {cargando && <p>Cargando...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {!cargando && !error && categorias.length === 0 && <p>No hay categorías disponibles.</p>}
+      {!cargando && !error && categorias.length > 0 && (
+        <>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categorias.map((categoria) => (
+                <tr key={categoria.id_categoria}>
+                  <td>{categoria.id_categoria}</td>
+                  <td>{categoria.nombre_categoria}</td>
+                  <td>{categoria.descripcion_categoria}</td>
+                  <td>
+                    <Button
+                      variant="warning"
+                      size="sm"
+                      onClick={() => onEditar(categoria)}
+                      className="me-2"
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => onEliminar(categoria)}
+                    >
+                      Eliminar
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Pagination>{items}</Pagination>
+        </>
+      )}
     </>
   );
 };
 
-// Exportación del componente
 export default TablaCategorias;
